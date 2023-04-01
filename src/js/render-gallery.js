@@ -1,9 +1,8 @@
 import { Notify } from 'notiflix';
 
 export function renderGallery(data) {
-  console.log(data.hits);
-  if (data.hits === []) {
-    return Notify.failure(
+  if (data.hits.length === 0) {
+   return Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
   }
@@ -12,7 +11,6 @@ export function renderGallery(data) {
 }
 
 function createMarkup(items) {
-  console.log(items);
   const itemsMarkup = items.map(
       ({
         comments,
