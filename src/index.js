@@ -10,7 +10,15 @@ const galleryContainer = document.querySelector('.gallery');
 const searchQuery = document.querySelector('.search-form');
 const loadMoreBtn = document.querySelector('.load-more');
 const page = searchImagesApi.page;
-const gallery = null;
+
+const gallery = new SimpleLightbox('.gallery a', {
+  captions: true,
+  captionSelector: 'img',
+  captionType: 'attr',
+  captionsData: 'alt',
+  captionPosition: 'bottom',
+  captionDelay: 250,
+});
 
 searchQuery.addEventListener('submit', handleSearchBtnSubmit);
 loadMoreBtn.addEventListener('click', handleLoadMoreClick);
@@ -27,15 +35,7 @@ function handleSearchBtnSubmit(e) {
       const markup = renderGallery(data.data);
       if (markup !== undefined) {
         galleryContainer.insertAdjacentHTML('beforeend', markup);
-        gallery = new SimpleLightbox('.gallery a', {
-          captions: true,
-          captionSelector: 'img',
-          captionType: 'attr',
-          captionsData: 'alt',
-          captionPosition: 'bottom',
-          captionDelay: 250,
-        });
-        return gallery;
+        gallery.on();
       }
     })
     .catch(error => console.error(error));
@@ -49,7 +49,7 @@ function handleLoadMoreClick(page) {
     .then(data => {
       const newMarkup = renderGallery(data.data);
       galleryContainer.insertAdjacentHTML('beforeend', newMarkup);
+      gallery.refresh();
     })
     .catch(error => console.error(error));
-  gallery.refresh();
 }
