@@ -9,9 +9,8 @@ const searchImagesApi = new SearchImagesAPI();
 const galleryContainer = document.querySelector('.gallery');
 const searchQuery = document.querySelector('.search-form');
 const loadMoreBtn = document.querySelector('.load-more');
-const page = searchImagesApi.page;
 
-const gallery = new SimpleLightbox('.gallery a', {
+let gallery = new SimpleLightbox('.gallery a', {
   captions: true,
   captionSelector: 'img',
   captionType: 'attr',
@@ -34,21 +33,21 @@ function handleSearchBtnSubmit(e) {
     .then(data => {
       const markup = renderGallery(data.data);
       if (markup !== undefined) {
-        galleryContainer.insertAdjacentHTML('beforeend', markup);
-        gallery.on();
+        galleryContainer.innerHTML=markup;
+        gallery.on('show.simplelightbox');
+        gallery.refresh();
       }
     })
     .catch(error => console.error(error));
 }
 
-function handleLoadMoreClick(page) {
-  page += 1;
-  searchImagesApi.page = page;
+function handleLoadMoreClick() {
+  searchImagesApi.page += 1;
   searchImagesApi
     .searchImages()
     .then(data => {
       const newMarkup = renderGallery(data.data);
-      galleryContainer.insertAdjacentHTML('beforeend', newMarkup);
+      galleryContainer.innerHTML=newMarkup;
       gallery.refresh();
     })
     .catch(error => console.error(error));
