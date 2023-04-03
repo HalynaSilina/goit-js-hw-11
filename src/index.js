@@ -80,7 +80,7 @@ function handleLoadMoreClick() {
       const newMarkup = renderGallery(items);
       galleryContainer.insertAdjacentHTML('beforeend', newMarkup);
       gallery.refresh();
-      window.addEventListener('scroll', throttle(onScroll), 300);
+      window.addEventListener('scroll', onScroll);
     })
     .catch(error => console.error(error));
 }
@@ -108,7 +108,10 @@ function onScroll() {
 function scrollToTop() {
   // Scroll to top logic
   window.removeEventListener('scroll', onScroll);
-  document.documentElement.scrollTop = 0;
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
   loadMoreBtn.classList.add('is-hidden');
   toTheTopBtn.classList.add('is-hidden');
   };
