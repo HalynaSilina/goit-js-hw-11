@@ -20,7 +20,10 @@ let gallery = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionPosition: 'bottom',
   captionDelay: 250,
+  overlayOpacity: 0.9,
+  widthRatio: 0.9,
 });
+let isActive = false;
 
 searchQuery.addEventListener('submit', handleSearchBtnSubmit);
 loadMoreBtn.addEventListener('click', handleLoadMoreClick);
@@ -81,7 +84,7 @@ function handleLoadMoreClick() {
       const newMarkup = renderGallery(items);
       galleryContainer.insertAdjacentHTML('beforeend', newMarkup);
       gallery.refresh();
-      window.addEventListener('scroll', onScroll);
+      // window.addEventListener('scroll', onScroll);
     })
     .catch(error => console.error(error));
 }
@@ -90,30 +93,29 @@ function reset() {
   // add some resets
   searchImagesApi.page = 1;
   galleryContainer.innerHTML = '';
-  
+
   loadMoreBtn.classList.add('is-hidden');
   toTheTopBtn.classList.add('is-hidden');
 }
 
-function onScroll() {
-  // add smooth skroll on window
-  const { height: cardHeight } = document
-    .querySelector('.gallery')
-    .firstElementChild.getBoundingClientRect();
+// function onScroll() {
+//   // add smooth skroll on window
+//     const { height: cardHeight } = document
+//       .querySelector('.gallery')
+//       .firstElementChild.getBoundingClientRect();
 
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: 'smooth',
-  });
-}
+//     window.scrollBy({
+//       top: cardHeight * 1,
+//       behavior: 'smooth',
+//     });
+//   }
 
 function scrollToTop() {
   // Scroll to top logic
-  window.removeEventListener('scroll', onScroll);
   window.scrollTo({
     top: 0,
-    behavior: "smooth",
+    behavior: 'smooth',
   });
   loadMoreBtn.classList.add('is-hidden');
   toTheTopBtn.classList.add('is-hidden');
-  };
+}
