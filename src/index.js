@@ -107,7 +107,8 @@ function onScroll() {
 
 function scrollToTop() {
   // Scroll to top logic
-  window.removeEventListener('scroll', throttle(onScroll), 300);
+  window.removeEventListener('scroll', onScroll);
   document.documentElement.scrollTop = 0;
-  reset();
+  loadMoreBtn.classList.add('is-hidden');
+  toTheTopBtn.classList.add('is-hidden');
   };
