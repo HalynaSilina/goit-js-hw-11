@@ -3,12 +3,15 @@ import { renderGallery } from './js/render-gallery';
 import { Notify } from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import throttle from 'lodash.throttle';
 
+// init new search api instance
 const searchImagesApi = new SearchImagesAPI();
 
 const galleryContainer = document.querySelector('.gallery');
 const searchQuery = document.querySelector('.search-form');
 const loadMoreBtn = document.querySelector('.load-more');
+const toTheTopBtn = document.querySelector('.top-btn');
 
 let gallery = new SimpleLightbox('.gallery a', {
   captions: true,
@@ -21,6 +24,8 @@ let gallery = new SimpleLightbox('.gallery a', {
 
 searchQuery.addEventListener('submit', handleSearchBtnSubmit);
 loadMoreBtn.addEventListener('click', handleLoadMoreClick);
+window.addEventListener('scroll', throttle(onScroll), 300);
+toTheTopBtn.addEventListener('click', scrollToTop);
 
 async function handleSearchBtnSubmit(e) {
   e.preventDefault();
@@ -28,7 +33,7 @@ async function handleSearchBtnSubmit(e) {
   const {
     elements: { searchQuery },
   } = e.currentTarget;
-  searchImagesApi.page = 1;
+  // check search request
   if (searchQuery.value === '') {
     return Notify.warning('Please, enter your search request');
   }
@@ -67,6 +72,7 @@ function handleLoadMoreClick() {
         searchImagesApi.page * searchImagesApi.per_page
       ) {
         loadMoreBtn.classList.add('is-hidden');
+        toTheTopBtn.classList.remove('is-hidden');
         Notify.failure(
           "We're sorry, but you've reached the end of search results."
         );
@@ -80,6 +86,30 @@ function handleLoadMoreClick() {
 }
 
 function reset() {
+  // add some resets
+  searchImagesApi.page = 1;
   galleryContainer.innerHTML = '';
   loadMoreBtn.classList.add('is-hidden');
+  toTheTopBtn.classList.add('is-hidden');
+}
+
+function onScroll() {
+  // add smooth skroll on window
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
+}
+
+function scrollToTop() {
+  // Scroll to top logic
+  window.removeEventListener('scroll', throttle(onScroll), 300);
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
 }
