@@ -24,7 +24,6 @@ let gallery = new SimpleLightbox('.gallery a', {
 
 searchQuery.addEventListener('submit', handleSearchBtnSubmit);
 loadMoreBtn.addEventListener('click', handleLoadMoreClick);
-window.addEventListener('scroll', throttle(onScroll), 300);
 toTheTopBtn.addEventListener('click', scrollToTop);
 
 async function handleSearchBtnSubmit(e) {
@@ -81,6 +80,7 @@ function handleLoadMoreClick() {
       const newMarkup = renderGallery(items);
       galleryContainer.insertAdjacentHTML('beforeend', newMarkup);
       gallery.refresh();
+      window.addEventListener('scroll', throttle(onScroll), 300);
     })
     .catch(error => console.error(error));
 }
@@ -108,8 +108,6 @@ function onScroll() {
 function scrollToTop() {
   // Scroll to top logic
   window.removeEventListener('scroll', throttle(onScroll), 300);
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth',
-  });
-}
+  document.documentElement.scrollTop = 0;
+  toTheTopBtn.classList.add('id-hidden');
+  };
