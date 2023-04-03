@@ -6,18 +6,20 @@ export class SearchImagesAPI {
 
   page = 1;
   query = null;
+  per_page = 40;
 
-  searchImages() {
-    return axios.get(`${this.#BASE_URL}`, {
+  async searchImages() {
+    const data = await axios.get(`${this.#BASE_URL}`, {
       params: {
         key: this.#API_KEY,
         q: this.query,
         page: this.page,
-        per_page: 40,
+        per_page: this.per_page,
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: true,
       },
     });
+    return data;
   }
 }

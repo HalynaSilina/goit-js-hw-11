@@ -22,23 +22,38 @@ let gallery = new SimpleLightbox('.gallery a', {
 searchQuery.addEventListener('submit', handleSearchBtnSubmit);
 loadMoreBtn.addEventListener('click', handleLoadMoreClick);
 
-function handleSearchBtnSubmit(e) {
+async function handleSearchBtnSubmit(e) {
   e.preventDefault();
+  reset();
   const {
     elements: { searchQuery },
   } = e.currentTarget;
-  searchImagesApi.query = searchQuery.value;
-  searchImagesApi
-    .searchImages()
-    .then(data => {
-      const markup = renderGallery(data.data);
+  searchImagesApi.page = 1;
+  if (searchQuery.value === '') {
+    return Notify.warning('Please, enter your search request');
+  }
+  searchImagesApi.query = searchQuery.value.trim();
+  try {
+    const images = await searchImagesApi.searchImages().then(data => {
+      const items = data.data.hits;
+      const totalItems = data.data.totalHits;
+      if (items.length === 0) {
+        return Notify.failure(
+          'Sorry, there are no images matching your search query. Please try again.'
+        );
+      }
+      Notify.success(`Hooray! We found ${totalItems} images.`);
+      const markup = renderGallery(items);
       if (markup !== undefined) {
-        galleryContainer.innerHTML=markup;
+        galleryContainer.innerHTML = markup;
         gallery.on('show.simplelightbox');
         gallery.refresh();
+        loadMoreBtn.classList.remove('is-hidden');
       }
-    })
-    .catch(error => console.error(error));
+    });
+  } catch {
+    error => console.error(error);
+  }
 }
 
 function handleLoadMoreClick() {
@@ -46,9 +61,25 @@ function handleLoadMoreClick() {
   searchImagesApi
     .searchImages()
     .then(data => {
-      const newMarkup = renderGallery(data.data);
-      galleryContainer.innerHTML=newMarkup;
+      const items = data.data.hits;
+      if (
+        data.data.totalHits <=
+        searchImagesApi.page * searchImagesApi.per_page
+      ) {
+        loadMoreBtn.classList.add('is-hidden');
+        Notify.failure(
+          "We're sorry, but you've reached the end of search results."
+        );
+        return;
+      }
+      const newMarkup = renderGallery(items);
+      galleryContainer.insertAdjacentHTML('beforeend', newMarkup);
       gallery.refresh();
     })
     .catch(error => console.error(error));
+}
+
+function reset() {
+  galleryContainer.innerHTML = '';
+  loadMoreBtn.classList.add('is-hidden');
 }
