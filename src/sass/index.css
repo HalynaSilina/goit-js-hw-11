@@ -3,13 +3,23 @@ body {
   max-width: 100%;
   margin: 0 auto;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1.15;
   color: #212121;
   background-color: #ebcbee;
   background-image: linear-gradient(to right, rgba(69, 104, 220, 0.8352941176), rgba(177, 106, 179, 0.8235294118)), url(../images/wavy-and-swirled-brush-strokes.jpg);
   background-repeat: repeat;
   text-align: center;
+}
+@media screen and (min-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+}
+@media screen and (min-width: 768px) {
+  body {
+    font-size: 18px;
+  }
 }
 
 img {
@@ -24,21 +34,40 @@ img {
 
 .search-form {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   margin: 0 auto;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+@media screen and (min-width: 768px) {
+  .search-form {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-around;
+  }
 }
 .search-form input {
-  min-width: 400px;
-  margin-right: 10px;
+  min-width: 300px;
+  margin: 0 auto;
   padding: 12px 10px;
   border-radius: 20px;
   border-color: transparent;
   outline: rgba(104, 10, 166, 0.66);
 }
+@media screen and (min-width: 768px) {
+  .search-form input {
+    min-width: 400px;
+    padding: 10px;
+    margin-right: 10px;
+  }
+}
 .search-form button {
-  min-width: 100px;
+  max-width: 100px;
+  margin-top: 25px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
   background-color: #fff;
   border-radius: 20px;
   border-color: transparent;
@@ -46,28 +75,73 @@ img {
   transition: box-shadow 250ms linear;
   cursor: pointer;
 }
+@media screen and (min-width: 768px) {
+  .search-form button {
+    margin-left: 0;
+  }
+}
 .search-form button:hover {
   box-shadow: 6px 17px 100px 27px rgba(255, 247, 255, 0.79);
 }
 
 .gallery {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  flex-wrap: wrap;
-  max-width: 1400px;
+  max-width: 300px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 100px;
+  margin-bottom: 90px;
+}
+@media screen and (min-width: 768px) {
+  .gallery {
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 700px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .gallery {
+    max-width: 1000px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .gallery {
+    min-width: 1300px;
+  }
+}
+@media screen and (min-width: 2560px) {
+  .gallery {
+    min-width: 2500px;
+  }
 }
 
 .photo-card {
-  flex-basis: calc((100% - 60px) / 3);
-  margin-right: 20px;
+  flex-basis: 90%;
+  margin-right: auto;
+  margin-left: auto;
   margin-top: 20px;
   border-radius: 6px;
   box-shadow: 6px 17px 137px 7px rgb(59, 13, 59);
   transition: box-shadow 250ms linear, transform 250ms linear 250ms;
   overflow: hidden;
+}
+@media screen and (min-width: 768px) {
+  .photo-card {
+    flex-basis: calc(50% - 40px);
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .photo-card {
+    flex-basis: calc((100% - 60px) / 3);
+  }
+}
+@media screen and (min-width: 2560px) {
+  .photo-card {
+    flex-basis: calc((100% - 100px) / 5);
+  }
 }
 .photo-card:hover {
   box-shadow: 6px 17px 184px 27px rgba(255, 247, 255, 0.79);
@@ -87,7 +161,7 @@ img {
 
 .load-more {
   min-width: 200px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   margin-right: auto;
   margin-left: auto;
   padding: 10px;

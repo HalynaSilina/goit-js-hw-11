@@ -72,6 +72,7 @@ function handleLoadMoreClick() {
       ) {
         loadMoreBtn.classList.add('is-hidden');
         toTheTopBtn.classList.remove('is-hidden');
+        searchQuery.reset();
         Notify.failure(
           "We're sorry, but you've reached the end of search results."
         );
@@ -89,6 +90,7 @@ function reset() {
   // add some resets
   searchImagesApi.page = 1;
   galleryContainer.innerHTML = '';
+  
   loadMoreBtn.classList.add('is-hidden');
   toTheTopBtn.classList.add('is-hidden');
 }

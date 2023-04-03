@@ -3,7 +3,7 @@ body {
   margin: 0 auto;
 
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1.15;
   color: #212121;
   background-color: #ebcbee;
@@ -12,6 +12,12 @@ body {
   background-repeat: repeat;
 
   text-align: center;
+  @media screen and (min-width: 768px) {
+    font-size: 16px;
+  }
+  @media screen and (min-width: 768px) {
+    font-size: 18px;
+  }
 }
 
 img {
@@ -26,23 +32,38 @@ img {
 
 .search-form {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   margin: 0 auto;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-around;
+  }
 
   & input {
-    min-width: 400px;
-    margin-right: 10px;
+    min-width: 300px;
+    margin: 0 auto;
     padding: 12px 10px;
 
     border-radius: 20px;
     border-color: transparent;
     outline: rgba(104, 10, 166, 0.66);
+    @media screen and (min-width: 768px) {
+      min-width: 400px;
+      padding: 10px;
+      margin-right: 10px;
+    }
   }
 
   & button {
-    min-width: 100px;
+    max-width: 100px;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
 
     background-color: #fff;
 
@@ -52,7 +73,9 @@ img {
     box-shadow: inset 6px -10px 103px -34px rgba(104, 10, 166, 0.66);
     transition: box-shadow 250ms linear;
     cursor: pointer;
-
+    @media screen and (min-width: 768px) {
+    margin-left: 0;
+    }
     &:hover {
       box-shadow: 6px 17px 100px 27px rgba(255, 247, 255, 0.79);
     }
@@ -61,24 +84,54 @@ img {
 
 .gallery {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  flex-wrap: wrap;
 
-  max-width: 1400px;
+  max-width: 300px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 100px;
+  margin-bottom: 90px;
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 700px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    max-width: 1000px;
+  }
+  @media screen and (min-width: 1440px) {
+    min-width: 1300px;
+  }
+  @media screen and (min-width: 2560px) {
+    min-width: 2500px;
+  }
 }
 
 .photo-card {
-  flex-basis: calc((100% - 60px) / 3);
-  margin-right: 20px;
+  flex-basis: 90%;
+  margin-right: auto;
+  margin-left: auto;
   margin-top: 20px;
 
   border-radius: 6px;
   box-shadow: 6px 17px 137px 7px rgba(59, 13, 59, 1);
   transition: box-shadow 250ms linear, transform 250ms linear 250ms;
   overflow: hidden;
+
+  @media screen and (min-width: 768px) {
+    flex-basis: calc((100% / 2) - 40px);
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    flex-basis: calc((100% - 60px) / 3);
+  }
+  @media screen and (min-width: 2560px) {
+    flex-basis: calc((100% - 100px) / 5);
+  }
 
   &:hover {
     box-shadow: 6px 17px 184px 27px rgba(255, 247, 255, 0.79);
@@ -100,7 +153,7 @@ img {
 
 .load-more {
   min-width: 200px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   margin-right: auto;
   margin-left: auto;
   padding: 10px;
